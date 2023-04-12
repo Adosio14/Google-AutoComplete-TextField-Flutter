@@ -22,6 +22,7 @@ class GooglePlaceAutoCompleteTextField extends StatefulWidget {
   int debounceTime = 600;
   List<String>? countries = [];
   TextEditingController textEditingController = TextEditingController();
+  final VoidCallback? onTap;
 
   GooglePlaceAutoCompleteTextField(
       {required this.textEditingController,
@@ -29,11 +30,11 @@ class GooglePlaceAutoCompleteTextField extends StatefulWidget {
       this.debounceTime: 600,
       this.inputDecoration: const InputDecoration(),
       this.itmClick,
-      this.isLatLngRequired=true,
+      this.isLatLngRequired = true,
       this.textStyle: const TextStyle(),
       this.countries,
       this.getPlaceDetailWithLatLng,
-      });
+      this.onTap});
 
   @override
   _GooglePlaceAutoCompleteTextFieldState createState() =>
@@ -56,6 +57,7 @@ class _GooglePlaceAutoCompleteTextFieldState
       link: _layerLink,
       child: TextFormField(
         decoration: widget.inputDecoration,
+        onTap: widget.onTap,
         style: widget.textStyle,
         controller: widget.textEditingController,
         onChanged: (string) => (subject.add(string)),
@@ -81,8 +83,6 @@ class _GooglePlaceAutoCompleteTextFieldState
         }
       }
     }
-
-
 
     Response response = await dio.get(url);
     PlacesAutocompleteResponse subscriptionResponse =
@@ -196,7 +196,8 @@ class _GooglePlaceAutoCompleteTextFieldState
 }
 
 PlacesAutocompleteResponse parseResponse(Map responseBody) {
-  return PlacesAutocompleteResponse.fromJson(responseBody as Map<String, dynamic>);
+  return PlacesAutocompleteResponse.fromJson(
+      responseBody as Map<String, dynamic>);
 }
 
 PlaceDetails parsePlaceDetailMap(Map responseBody) {
