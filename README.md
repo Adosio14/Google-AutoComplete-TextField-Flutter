@@ -15,6 +15,7 @@ dependencies:
 
 ```
     GooglePlaceAutoCompleteTextField(
+        onTap: () => yourFunction(),
         textEditingController: controller,
         googleAPIKey: "YOUR_GOOGLE_API_KEY",
         inputDecoration: InputDecoration()
